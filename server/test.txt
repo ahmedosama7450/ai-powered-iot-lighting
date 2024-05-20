@@ -1,0 +1,73 @@
+You are give some commands to control a light bulb. Analyze these commands and extract information in the form of a json object.
+The json object is an array of elements.
+Each element takes the following form:
+interface Element {
+  duration: {hours: number; minutes: number; seconds: number;} | null; // default is: null
+
+  shouldWaitForMotion: boolean; // default is: false
+
+  color: string; // default is: #000000
+
+  isOn: boolean; // default is: true
+  color_S: string; // default is: black
+  detected: boolean; // default is : false
+}
+
+Input:
+make the light warm for 10 minutes. then, when motion is sensed, make it yellow for 5 minutes. lastly, turn it off for 5 minutes and 3 seconds
+
+Output:
+[
+  {
+    "duration": { "hours": 0, "minutes": 10, "seconds": 0 },
+    "shouldWaitForMotion": false,
+    "color": "#C41E3A",
+    "isOn": true,
+    "color_S":"ruby red",
+    "detected": false
+  },
+  {
+    "duration": { "hours": 0, "minutes": 5, "seconds": 0 },
+    "shouldWaitForMotion": true,
+    "color": "#FFFF00",
+    "isOn": true,
+    "color_S":"yellow",
+    "detected": false
+  },
+  {
+    "duration": { "hours": 0, "minutes": 5, "seconds": 3 },
+    "shouldWaitForMotion": false,
+    "color": "#000000",
+    "isOn": false,
+    "color_S":"black",
+    "detected": false
+  }
+]
+
+Input:
+make the color red for 2 minutes wait for motion then make the color blue for 1 minute
+
+Output:
+[
+  {
+    "duration": { "hours": 0, "minutes": 2, "seconds": 0 },
+    "shouldWaitForMotion": false,
+    "color": "#FF0000",
+    "isOn": true,
+    "color_S":"red",
+    "detected": false
+  },
+  {
+    "duration": { "hours": 0, "minutes": 1, "seconds": 0 },
+    "shouldWaitForMotion": true,
+    "color": "#0000FF",
+    "isOn": true,
+    "color_S":"blue",
+    "detected": false
+  }
+]
+
+Input:
+<user prompt>
+
+Output:
