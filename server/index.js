@@ -49,6 +49,13 @@ function refinePromptResult(promptResult, end) {
 
 const Server_get = createServer(async (req, res) => {
   const { pathname, query } = parse(req.url, true);
+  
+  // Set CORS headers
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,content-type");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+
   if (pathname === "/api" && req.method == "GET") {
     const prompt = query.prompt;
     try {
@@ -68,8 +75,8 @@ const Server_get = createServer(async (req, res) => {
           }
         });
         waiting = false;
-        res.writeHead(200, { "Content-Type": "text/plain" });
-        res.end(`Received prompt: ${JSON.stringify(Data)}`);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(Data));
       } else {
         const error = new Error("Something Wrong happened, Please Try again");
         res.writeHead(500, { "Content-Type": "text/plain" });
@@ -89,7 +96,7 @@ const Server_get = createServer(async (req, res) => {
 
 const port_get = 8000;
 Server_get.listen(port_get, () => {
-  console.log("server is rumming");
+  console.log("server is running");
 });
 
 dotenv.config();
@@ -103,7 +110,7 @@ const config = {
 };
 var port = new SerialPort(config.port, { baudRate: config.baudRate });
 
-const data = await fs.readFile("./test.txt", { encoding: "utf8" });
+const data = await fs.readFile("./prompt.txt", { encoding: "utf8" });
 const model = genAI.getGenerativeModel({
   model: "gemini-pro",
   generationConfig: { temperature: 0 },
@@ -123,7 +130,7 @@ port.on("open", () => {
 
 port.on("data", (data) => {
   if (data == "0") {
-    console.log("hellllo");
+    console.log("hello");
     if (indx >= Data.length - 1 || sync) {
       console.log("done");
       waiting = true;
@@ -149,7 +156,7 @@ port.on("error", (err) => {
 });
 
 io.on("connection", function (socket) {
-  console.log("user is connectes");
+  console.log("user is connecting");
   socket.on("data", async (data) => {
     try {
       var txt = await Get_From_AI(data["Orders"]);
