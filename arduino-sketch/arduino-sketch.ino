@@ -13,6 +13,7 @@ bool infinity = true;
 bool sync = false;
 bool Updated = false;
 char ch;
+
 void setup()
 {
   // put your setup code here, to run once:
@@ -101,6 +102,7 @@ void loop()
     Updated = true;
   }
 }
+
 void parseHexString(String hexString, byte *byteArray)
 {
   for (int i = 1; i < hexString.length(); i += 2)
