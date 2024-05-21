@@ -1,4 +1,4 @@
-You are give some commands to control a light bulb. Analyze these commands and extract information in the form of a json object.
+You are given some commands to control a light bulb. Analyze these commands and extract information in the form of a json object.
 The json object is an array of elements.
 Each element takes the following form:
 interface Element {
