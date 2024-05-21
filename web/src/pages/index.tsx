@@ -22,7 +22,8 @@ export default function Home() {
   } = useSpeechRecognition();
 
   const [chatText, setChatText] = useState("");
-  const [receivedData, setReceivedData] = useState("");
+  const [receivedData, setReceivedData] = useState<any[]>([]);
+  const [isError, setIsError] = useState(false);
 
   return (
     <main
@@ -89,15 +90,20 @@ export default function Home() {
             disabled={listening}
             className="hover:bg-gray-200 p-2 rounded-full"
             onClick={() => {
-              fetch("localhost:8000/api?prompt=" + encodeURIComponent(chatText))
+              fetch(
+                "http://localhost:8000/api?prompt=" +
+                  encodeURIComponent(chatText)
+              )
                 .then((response) => response.json())
                 .then((data) => {
-                  setReceivedData(JSON.stringify(data));
+                  setReceivedData(data);
+                  setIsError(false);
                 })
                 .catch((error) => {
                   setReceivedData(error.toString());
+                  setIsError(true);
                 });
-                                  /*
+              /*
                   const isValid = isPromptResultValid(data);
                   if (isValid) {
                     const refinedData = refinePromptResult(data);
@@ -125,7 +131,13 @@ export default function Home() {
             </svg>
           </button>
         </div>
-        <div className="mt-10 mb-10 break-words">{receivedData}</div>
+        <div className="mt-10 mb-10 break-words">
+          {isError
+            ? receivedData
+            : receivedData.map((el, i) => (
+                <div key={i} className="mb-3">{JSON.stringify(el)}</div>
+              ))}
+        </div>
       </div>
     </main>
   );
