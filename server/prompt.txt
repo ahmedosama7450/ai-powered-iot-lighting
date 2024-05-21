@@ -1,16 +1,13 @@
-You are give some commands to control a light bulb. Analyze these commands and extract information in the form of a json object.
+You are given some commands to control a light bulb. Analyze these commands and extract information in the form of a json object.
 The json object is an array of elements.
 Each element takes the following form:
 interface Element {
   duration: {hours: number; minutes: number; seconds: number;} | null; // default is: null
-
   shouldWaitForMotion: boolean; // default is: false
-
   color: string; // default is: #000000
-
   isOn: boolean; // default is: true
   color_S: string; // default is: black
-  detected: boolean; // default is : false
+  detected: boolean; // default is: false
 }
 
 Input:
@@ -23,7 +20,7 @@ Output:
     "shouldWaitForMotion": false,
     "color": "#C41E3A",
     "isOn": true,
-    "color_S":"ruby red",
+    "color_S": "ruby red",
     "detected": false
   },
   {
@@ -31,7 +28,7 @@ Output:
     "shouldWaitForMotion": true,
     "color": "#FFFF00",
     "isOn": true,
-    "color_S":"yellow",
+    "color_S": "yellow",
     "detected": false
   },
   {
@@ -39,7 +36,7 @@ Output:
     "shouldWaitForMotion": false,
     "color": "#000000",
     "isOn": false,
-    "color_S":"black",
+    "color_S": "black",
     "detected": false
   }
 ]
@@ -54,7 +51,7 @@ Output:
     "shouldWaitForMotion": false,
     "color": "#FF0000",
     "isOn": true,
-    "color_S":"red",
+    "color_S": "red",
     "detected": false
   },
   {
@@ -62,7 +59,7 @@ Output:
     "shouldWaitForMotion": true,
     "color": "#0000FF",
     "isOn": true,
-    "color_S":"blue",
+    "color_S": "blue",
     "detected": false
   }
 ]
