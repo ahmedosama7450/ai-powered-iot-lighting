@@ -24,6 +24,7 @@ export default function Home() {
   const [chatText, setChatText] = useState("");
   const [receivedData, setReceivedData] = useState<any[]>([]);
   const [isError, setIsError] = useState(false);
+  const [voiceLang, setVoiceLang] = useState<"en-US" | "ar-EG">("en-US");
 
   return (
     <main
@@ -35,6 +36,14 @@ export default function Home() {
       </Head>
 
       <div className="mx-auto flex flex-col items-center">
+        <button
+          className="absolute top-0 left-0 m-4 bg-gray-500 text-white text-sm rounded-lg p-2.5"
+          onClick={() => {
+            setVoiceLang(voiceLang === "en-US" ? "ar-EG" : "en-US");
+          }}
+        >
+          {voiceLang}
+        </button>
         <h1 className="text-3xl mb-10 font-bold tracking-tight text-gray-900">
           AI Powered IOT Lighting
         </h1>
@@ -64,7 +73,7 @@ export default function Home() {
                   resetTranscript();
                   SpeechRecognition.startListening({
                     continuous: true,
-                    language: "en-US",
+                    language: voiceLang,
                   });
                 }
               }}
@@ -135,7 +144,9 @@ export default function Home() {
           {isError
             ? receivedData
             : receivedData.map((el, i) => (
-                <div key={i} className="mb-3">{JSON.stringify(el)}</div>
+                <div key={i} className="mb-3">
+                  {JSON.stringify(el)}
+                </div>
               ))}
         </div>
       </div>
